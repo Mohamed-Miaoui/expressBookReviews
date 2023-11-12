@@ -5,8 +5,7 @@ const regd_users = express.Router();
 
 let users = [];
 
-const isValid = (username) => { //returns boolean
-  //write code to check is the username is valid
+const isValid = (username) => {
   let userswithsamename = users.filter((user) => {
     return user.username === username
   });
@@ -17,8 +16,7 @@ const isValid = (username) => { //returns boolean
   }
 }
 
-const authenticatedUser = (username, password) => { //returns boolean
-  //write code to check if username and password match the one we have in records.
+const authenticatedUser = (username, password) => {
   let validusers = users.filter((user) => {
     return (user.username === username && user.password === password)
   });
@@ -31,7 +29,6 @@ const authenticatedUser = (username, password) => { //returns boolean
 
 //only registered users can login
 regd_users.post("/login", (req, res) => {
-  //Write your code here
   const username = req.body.username;
   const password = req.body.password;
   if (!username || !password) {
@@ -50,29 +47,24 @@ regd_users.post("/login", (req, res) => {
   }
 });
 
-// Add a book review
+
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
   let isbn = req.params.isbn;
-
-  // Find the user with the specified ISBN
-  let user = users.find((user) => user.isbn === isbn);
-
-  if (user) {
-    if (!user.reviews) {
-      user.reviews = [];
-    }
-
-    user.reviews.push(req.query.reviews);
-    res.send(`The user's reviews for ISBN ${isbn} have been updated`);
-  } else {
-    res.status(404).send("User not found");
+  let bookSelected = books.filter((book) => book[isbn] = isbn);
+  if (bookSelected) {
+    books.reviews.push(req.query.review);
   }
+  else {
+    res.send(`review with  ${isbn} have been updated`);
+  }
+
+
+
 });
 regd_users.delete("/auth/review/:isbn", (req, res) => {
   if (!authenticatedUser) {
     let isbn = req.params.isbn;
-    user = users.filter((user) => user.isbn != isbn);
+    bookSelected = books.filter((book) => book[isbn] != isbn);
     res.send(`review with the isbn ${isbn} is deleted. `)
   }
 });
